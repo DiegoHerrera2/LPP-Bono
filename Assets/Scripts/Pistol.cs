@@ -38,7 +38,7 @@ public class Pistol : MonoBehaviour
         var position = _transform.localPosition;
         if ((input.firing && delay <= 0) && !input.sprint)
         {
-            var bulletCreated = Instantiate(bullet, bulletOrigin.position, Quaternion.identity);
+            var bulletCreated = Instantiate(bullet, bulletOrigin.position, Quaternion.LookRotation(transform.forward));
             bulletCreated.velocity = transform.forward * speed;
             _audioSource.Play();
             _transform.DOLocalRotate(new Vector3(recoil, rotation.y, rotation.z), recoilDuration);
