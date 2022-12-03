@@ -5,7 +5,9 @@ using UnityEngine;
 public class HurtTrigger : MonoBehaviour
 {
     public int damage;
+    public float cooldown;
 
+    private float _lastFrameHit;
 
 
     private void Awake()
@@ -13,12 +15,17 @@ public class HurtTrigger : MonoBehaviour
 
 
     }
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        var health = other.GetComponent<Health>();
-        if (health != null) health.Damage(damage);
-
-        
+        if (Time.time > _lastFrameHit)
+        {
+            var health = other.GetComponent<Health>();
+            if (health != null)
+            {
+                health.Damage(damage);
+                _lastFrameHit = Time.time + cooldown;
+            }
+        }
     }
 
 }
